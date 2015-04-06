@@ -14,16 +14,14 @@ public:
 
     std::string const & getFileName(void) const;
     int const & getSize(void) const;
-    std::vector<std::vector<int>> const & getBoard(void) const;
 
-    void parseFile(void);
+    std::vector<std::vector<int>> parseFile(void);
 
 private:
     Parser();
 
     std::string _fileName;
     int _size;
-    std::vector<std::vector<int>> _board;
 
 };
 

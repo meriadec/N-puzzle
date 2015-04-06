@@ -7,7 +7,10 @@ class Puzzle {
 
 public:
     Puzzle(void);
+    Puzzle(std::vector<std::vector<int>>);
     virtual ~Puzzle(void);
+
+    void print(void);
 
 private:
 

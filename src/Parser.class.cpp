@@ -1,5 +1,7 @@
 #include <Parser.class.hpp>
 #include <fstream>
+#include <iostream>
+#include <sstream>
 
 Parser::Parser() {
     return;
@@ -31,21 +33,41 @@ int const & Parser::getSize(void) const {
     return this->_size;
 }
 
-std::vector<std::vector<int>> const & Parser::getBoard(void) const {
-    return this->_board;
-}
-
-void Parser::parseFile(void) {
+std::vector<std::vector<int>> Parser::parseFile(void) {
     if (this->_fileName.empty()) {
-        return;
+        throw new std::exception();
     }
-
     std::ifstream file(this->_fileName);
     std::string line;
+    std::vector<std::vector<int>> board;
+    int i = 0;
     while (std::getline(file, line)) {
-        // parse the file
-        /*if (line[0] != '#') {
-
-        }*/
+        unsigned long com = line.find('#');
+        if (com != std::string::npos) {
+            line = line.substr(0, com);
+        }
+        if (!line.empty()) {
+            if (i == 0) {
+                this->_size = std::stoi(line);
+            } else {
+                std::vector<int> row;
+                std::string delimiter = " ";
+                size_t pos = 0;
+                std::string token;
+                while ((pos = line.find(delimiter)) != std::string::npos) {
+                    token = line.substr(0, pos);
+                    if (!token.empty()) {
+                        row.push_back(std::stoi(token));
+                    }
+                    line.erase(0, pos + delimiter.length());
+                }
+                if (!line.empty()) {
+                    row.push_back(std::stoi(line));
+                }
+                board.push_back(row);
+            }
+            i++;
+        }
     }
+    return board;
 }
