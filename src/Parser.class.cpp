@@ -35,6 +35,7 @@ int const & Parser::getSize(void) const {
 
 std::vector<std::vector<int>> Parser::parseFile(void) {
     if (this->_fileName.empty()) {
+        // FIXME
         throw new std::exception();
     }
     std::ifstream file(this->_fileName);
