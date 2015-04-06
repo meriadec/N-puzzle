@@ -5,6 +5,7 @@ LIBS		=
 INC			= -I inc
 
 SRC			=	$(DIR_SRC)/main.cpp \
+				$(DIR_SRC)/Parser.class.cpp
 
 DIR_OBJ		= .obj
 DIR_INC		= inc

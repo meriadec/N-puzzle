@@ -1,7 +1,9 @@
-#include "npuzzle.hpp"
+#include <npuzzle.hpp>
 
-int main (void)
-{
-  std::cout << "Yolo." << std::endl;
+int main (int ac, char **av) {
+
+  if (ac != 2) {
+    std::cerr << "Usage: ./npuzzle map" << std::endl;
+  }
   return (0);
 }
