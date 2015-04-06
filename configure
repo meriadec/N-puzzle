@@ -1,0 +1,5 @@
+rm -rf build
+cmake -H. -Bbuild
+make -C build
+rm npuzzle
+ln -s build/npuzzle .

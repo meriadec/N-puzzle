@@ -1,7 +1,5 @@
 #include <npuzzle.hpp>
 
-int main (int ac, char **av) {
-
 int main (int ac, char **av)
 {
   static_cast<void>(av);
