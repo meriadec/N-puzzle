@@ -2,6 +2,7 @@
 #define UTILS_CLASS_HPP
 
 #include <npuzzle.hpp>
+#include <list>
 
 class Utils {
 
@@ -14,6 +15,8 @@ public:
     static std::pair<size_t, size_t> getFinalPos(int val, BOARD &);
     static bool isTileRightPlaced(int val, BOARD &);
     static int getHammingDistance(BOARD &);
+    static std::list<BOARD> getAvailableMoves(BOARD &);
+    static void printBoard(BOARD &);
 };
 
 #endif

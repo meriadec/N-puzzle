@@ -1,6 +1,7 @@
 #include <npuzzle.hpp>
 #include <Parser.class.hpp>
 #include <Puzzle.class.hpp>
+#include <Utils.class.hpp>
 
 int main (int ac, char **av)
 {
@@ -9,9 +10,9 @@ int main (int ac, char **av)
     return (1);
   }
   Parser parser(av[1]);
-  std::vector<std::vector<int>> board = parser.parseFile();
+  BOARD board = parser.parseFile();
   Puzzle puzzle(board);
-  puzzle.print();
+  Utils::printBoard(board);
 
   return (0);
 }

@@ -12,8 +12,6 @@ public:
     Puzzle(BOARD const &);
     virtual ~Puzzle(void);
 
-    void print(void);
-
     bool isSolvable (void);
 
 private:

@@ -18,17 +18,6 @@ Puzzle & Puzzle::operator=(Puzzle const &src) {
     return *this;
 }
 
-void Puzzle::print(void) {
-    BOARD::iterator row;
-    for (row = this->_board.begin(); row != this->_board.end() ; ++row) {
-        std::vector<int>::iterator col;
-        for (col = (*row).begin(); col != (*row).end() ; ++col) {
-            std::cout << std::setw(2) << (*col) << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
 /**
  * @description This function get the number of permutations
  *
@@ -68,7 +57,7 @@ bool Puzzle::isSolvable(void)
 /**
  * @description Build the "serpent", aka the *real* english word for a serpent.
  */
-std::list<int> Puzzle::_getSerpent (std::vector<std::vector<int>> & v)
+std::list<int> Puzzle::_getSerpent (BOARD & v)
 {
     std::list<int>  serpent;
     size_t          deep = 0;
@@ -77,8 +66,8 @@ std::list<int> Puzzle::_getSerpent (std::vector<std::vector<int>> & v)
 
     while (deep < len) {
         y = x = deep;
-        while (x < len - deep) { serpent.push_back(v[y][x++]); } --x; ++y;
-        while (y < len - deep) { serpent.push_back(v[y++][x]); } --x; --y;
+        while (x < len - deep) { serpent.push_back(v[y][x++]); } x = (x > 0 ? --x : x); ++y;
+        while (y < len - deep) { serpent.push_back(v[y++][x]); } x = (x > 0 ? --x : x); y = (y > 0 ? --y : y);
         while (x > deep) { serpent.push_back(v[y][x--]); }
         while (y > deep) { serpent.push_back(v[y--][x]); }
         ++deep;
