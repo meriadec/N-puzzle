@@ -9,7 +9,7 @@ class Puzzle {
 
 public:
     Puzzle(void);
-    Puzzle(std::vector<std::vector<int>>);
+    Puzzle(BOARD const &);
     virtual ~Puzzle(void);
 
     void print(void);
@@ -23,7 +23,7 @@ private:
 
     std::vector<std::vector<int>> _board;
 
-    int             _getPermutations (std::list<int> &list);
+    int             _getPermutations (std::list<int> &);
     std::list<int>  _getSerpent (std::vector<std::vector<int>> &);
 };
 
