@@ -2,7 +2,7 @@
 #define PARSER_CLASS_H
 
 #include <string>
-#include <vector>
+#include <npuzzle.hpp>
 
 class Parser {
 
@@ -15,7 +15,7 @@ public:
     std::string const & getFileName(void) const;
     int const & getSize(void) const;
 
-    std::vector<std::vector<int>> parseFile(void);
+    BOARD parseFile(void);
 
 private:
     Parser();

@@ -33,14 +33,14 @@ int const & Parser::getSize(void) const {
     return this->_size;
 }
 
-std::vector<std::vector<int>> Parser::parseFile(void) {
+BOARD Parser::parseFile(void) {
     if (this->_fileName.empty()) {
         // FIXME
         throw new std::exception();
     }
     std::ifstream file(this->_fileName);
     std::string line;
-    std::vector<std::vector<int>> board;
+    BOARD board;
     int i = 0;
     while (std::getline(file, line)) {
         unsigned long com = line.find('#');
