@@ -15,7 +15,6 @@ public:
     void print(void);
 
     bool isSolvable (void);
-    int getManhattanDistance (size_t, size_t, std::vector<std::vector<int>> &);
 
 private:
 
@@ -26,7 +25,6 @@ private:
 
     int             _getPermutations (std::list<int> &list);
     std::list<int>  _getSerpent (std::vector<std::vector<int>> &);
-    std::pair<size_t, size_t> _getPos (int val, std::vector<std::vector<int>> &board);
 };
 
 #endif

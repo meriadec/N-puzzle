@@ -1,6 +1,6 @@
 #include <Puzzle.class.hpp>
 #include <iomanip>
-#include <utility>
+#include <Utils.class.hpp>
 
 Puzzle::Puzzle(Puzzle const &src) {
 }
@@ -14,7 +14,7 @@ Puzzle::Puzzle(void) {
 Puzzle::~Puzzle(void) {
 }
 
-Puzzle &Puzzle::operator=(Puzzle const &src) {
+Puzzle & Puzzle::operator=(Puzzle const &src) {
     return *this;
 }
 
@@ -59,8 +59,8 @@ bool Puzzle::isSolvable(void)
 {
     std::list<int> serpent = this->_getSerpent(this->_board);
     int nbPermut = this->_getPermutations(serpent);
-    std::pair<size_t, size_t> pos = this->_getPos(0, this->_board);
-    int dist = this->getManhattanDistance(pos.first, pos.second, this->_board);
+    std::pair<size_t, size_t> pos = Utils::getPos(0, this->_board);
+    int dist = Utils::getManhattanDistance(pos.first, pos.second, this->_board);
 
     return (dist % 2 == nbPermut % 2);
 }
@@ -84,43 +84,4 @@ std::list<int> Puzzle::_getSerpent (std::vector<std::vector<int>> & v)
         ++deep;
     }
     return serpent;
-}
-
-int Puzzle::getManhattanDistance (size_t j, size_t i, std::vector<std::vector<int>> & board)
-{
-    int             val = board[j][i];
-    size_t          deep = 0;
-    size_t          len = board.size();
-    size_t          y = 0, x = 0;
-    bool            found = false;
-
-    while (deep < len && !found) {
-        y = x = deep;
-        while (x < len - deep) { if (board[y][x] == val) { found = true; break; } ++x; } --x; ++y;
-        while (y < len - deep) { if (board[y][x] == val) { found = true; break; } y++; } --x; --y;
-        while (x > deep) { if (board[y][x] == val) { found = true; break; } x--; }
-        while (y > deep) { if (board[y][x] == val) { found = true; break; } y--; }
-        ++deep;
-    }
-    return (abs(static_cast<int>(j - y)) + abs(static_cast<int>(i - x)));
-}
-
-std::pair<size_t, size_t> Puzzle::_getPos (int val, std::vector<std::vector<int>> &board)
-{
-    std::vector<std::vector<int>>::iterator ity;
-    std::vector<int>::iterator itx;
-    size_t y = 0, x;
-
-    for (ity = board.begin(); ity != board.end(); ity++) {
-        x = 0;
-        for (itx = board[y].begin(); itx != board[y].end(); itx++) {
-            if (board[y][x] == val) {
-                return std::make_pair(y, x);
-            }
-            ++x;
-        }
-        ++y;
-    }
-    // FIXME
-    throw std::exception();
 }
