@@ -6,7 +6,7 @@
 int main (int ac, char **av)
 {
   if (ac != 2) {
-    std::cerr << "Usage: ./npuzzle <map>" << std::endl;
+    std::cerr << "Usage: ./npuzzle <map> [-h <manhattan|hamming>]" << std::endl;
     return (1);
   }
   try {
