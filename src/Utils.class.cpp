@@ -1,10 +1,9 @@
 #include <Utils.class.hpp>
 #include <iomanip>
-#include <Puzzle.class.hpp>
 
-std::pair<size_t, size_t> Utils::getPos(int val, BOARD & board) {
-    BOARD::iterator ity;
-    std::vector<int>::iterator itx;
+std::pair<size_t, size_t> Utils::getPos(int val, BOARD const & board) {
+    BOARD::const_iterator ity;
+    std::vector<int>::const_iterator itx;
     size_t y = 0, x;
 
     for (ity = board.begin(); ity != board.end(); ity++) {
@@ -30,10 +29,10 @@ void Utils::iterBoard(BOARD & board, void (*func)(void)) {
     }
 }
 
-void Utils::printBoard(BOARD & board) {
-    BOARD::iterator row;
+void Utils::printBoard(BOARD const & board) {
+    BOARD::const_iterator row;
     for (row = board.begin(); row != board.end() ; ++row) {
-        std::vector<int>::iterator col;
+        std::vector<int>::const_iterator col;
         for (col = (*row).begin(); col != (*row).end() ; ++col) {
             std::cout << std::setw(2) << (*col) << " ";
         }

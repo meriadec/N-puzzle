@@ -9,9 +9,9 @@ class Utils {
 
 public:
 
-    static std::pair<size_t, size_t> getPos(int, BOARD &);
+    static std::pair<size_t, size_t> getPos(int, BOARD const &);
     static void iterBoard(BOARD &, void (*)(void));
-    static void printBoard(BOARD &);
+    static void printBoard(BOARD const &);
     static void heuristicInsertInList(Node &, std::list<Node> &);
 
     class NotFoundException : public std::exception {
