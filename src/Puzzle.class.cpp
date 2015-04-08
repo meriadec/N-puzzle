@@ -1,6 +1,5 @@
 #include <Puzzle.class.hpp>
 #include <iomanip>
-#include <algorithm>
 #include <Utils.class.hpp>
 
 Puzzle::Puzzle(Puzzle const &src) {
