@@ -232,7 +232,7 @@ void Puzzle::solve (void) {
 
     while (!opened.empty()) {
         Node current = opened.front();
-        if (current.board == this->_finalBoard) {
+        if (current.h == 0) {
             Utils::printBoard(current.board);
             std::cout << "SOLVED" << std::endl;
             return;

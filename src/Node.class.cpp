@@ -22,5 +22,5 @@ Node & Node::operator=(Node const &src) {
 }
 
 bool Node::operator==(Node const &src) {
-    return this->board == src.board;
+    return this->h == src.h && this->board == src.board;
 }
