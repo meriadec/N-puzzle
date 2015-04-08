@@ -2,6 +2,7 @@
 #define UTILS_CLASS_HPP
 
 #include <npuzzle.hpp>
+#include <Node.class.hpp>
 #include <list>
 
 class Utils {
@@ -10,14 +11,15 @@ public:
 
     static std::pair<size_t, size_t> getPos(int, BOARD &);
     static void iterBoard(BOARD &, void (*)(void));
-    static std::list<BOARD> getAvailableMoves(BOARD &);
     static void printBoard(BOARD &);
+    static void heuristicInsertInList(Node &, std::list<Node> &);
 
     class NotFoundException : public std::exception {
         virtual const char * what (void) const throw () {
             return "Error: Not found.";
         }
     };
+
 };
 
 #endif

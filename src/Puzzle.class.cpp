@@ -1,5 +1,6 @@
 #include <Puzzle.class.hpp>
 #include <iomanip>
+#include <algorithm>
 #include <Utils.class.hpp>
 
 Puzzle::Puzzle(Puzzle const &src) {
@@ -115,6 +116,58 @@ bool Puzzle::_isTileRightPlaced(int val, BOARD & board) {
     return Utils::getPos(val, board) == Utils::getPos(val, this->_finalBoard);
 }
 
+std::list<Node> Puzzle::_getAvailableMoves(Node & node) {
+    std::list<Node> moves;
+    Node newNode;
+    BOARD & board = node.board;
+
+    std::pair<size_t, size_t> pos = Utils::getPos(0, board);
+    size_t j = pos.first, i = pos.second;
+    unsigned long size = board.size();
+
+    if (j > 0) {
+        newNode.board = board;
+        newNode.board[j][i] = newNode.board[j - 1][i];
+        newNode.board[j - 1][i] = 0;
+        newNode.parent = &node;
+        newNode.h = this->getSumManhattanDistances(newNode.board);
+        newNode.g = node.g + 1;
+        newNode.f = node.h + node.g;
+        moves.push_back(newNode);
+    }
+    if (i > 0) {
+        newNode.board = board;
+        newNode.board[j][i] = newNode.board[j][i - 1];
+        newNode.board[j][i - 1] = 0;
+        newNode.parent = &node;
+        newNode.h = this->getSumManhattanDistances(newNode.board);
+        newNode.g = node.g + 1;
+        newNode.f = node.h + node.g;
+        moves.push_back(newNode);
+    }
+    if (j < size - 1) {
+        newNode.board = board;
+        newNode.board[j][i] = newNode.board[j + 1][i];
+        newNode.board[j + 1][i] = 0;
+        newNode.parent = &node;
+        newNode.h = this->getSumManhattanDistances(newNode.board);
+        newNode.g = node.g + 1;
+        newNode.f = node.h + node.g;
+        moves.push_back(newNode);
+    }
+    if (i < size - 1) {
+        newNode.board = board;
+        newNode.board[j][i] = newNode.board[j][i + 1];
+        newNode.board[j][i + 1] = 0;
+        newNode.parent = &node;
+        newNode.h = this->getSumManhattanDistances(newNode.board);
+        newNode.g = node.g + 1;
+        newNode.f = node.h + node.g;
+        moves.push_back(newNode);
+    }
+    return moves;
+}
+
 /**
  * Heuristic 1
  */
@@ -151,5 +204,105 @@ int Puzzle::getHammingDistance (BOARD &board) {
  * Solves the puzzle. Obviously.
  */
 void Puzzle::solve (void) {
-    
+    std::list<Node> closed;
+    Node start;
+    start.board = this->_board;
+    start.parent = NULL;
+    start.h = this->getSumManhattanDistances(start.board);
+    start.g = 0;
+    start.f = start.g + start.h;
+    std::list<Node> opened;
+    opened.push_back(start);
+
+    while (!opened.empty()) {
+        Node current = opened.front();
+        if (current.board == this->_finalBoard) {
+            Utils::printBoard(current.board);
+            std::cout << "SOLVED" << std::endl;
+            return;
+        } else {
+            opened.pop_front();
+            closed.push_front(current);
+            std::list<Node> moves = this->_getAvailableMoves(current);
+            std::list<Node>::iterator it;
+            for (it = moves.begin(); it != moves.end(); ++it) {
+                if (std::find(opened.begin(), opened.end(), *it) == opened.end() && std::find(closed.begin(), closed.end(), *it) == closed.end()) {
+                    Utils::heuristicInsertInList(*it, opened);
+                } else {
+                    if ((*it).f > current.f + 1) {
+                        (*it).g = current.g + 1;
+                        if (std::find(closed.begin(), closed.end(), *it) != closed.end()) {
+                            closed.remove(*it);
+                            Utils::heuristicInsertInList(*it, opened);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

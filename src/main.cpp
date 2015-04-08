@@ -13,9 +13,8 @@ int main (int ac, char **av)
     Parser parser(av[1]);
     BOARD board = parser.parseFile();
     Puzzle puzzle(board);
-    Utils::printBoard(board);
-    std::cout << puzzle.getSumManhattanDistances(board) << std::endl;
-    std::cout << puzzle.getHammingDistance(board) << std::endl;
+//    Utils::printBoard(board);
+    puzzle.solve();
   } catch (Parser::MapNotFoundException & e) {
     std::cout << e.what() << std::endl;
   }

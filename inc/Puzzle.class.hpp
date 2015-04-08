@@ -2,6 +2,7 @@
 #define PUZZLE_CLASS_H
 
 #include <npuzzle.hpp>
+#include <Node.class.hpp>
 #include <vector>
 #include <list>
 
@@ -25,11 +26,12 @@ private:
     BOARD   _board;
     BOARD   _finalBoard;
 
-    int             _getPermutations (std::list<int> &);
-    std::list<int>  _getSerpent (std::vector<std::vector<int>> &);
-    BOARD           _buildFinalBoard (void);
-    int             _getManhattanDistance (size_t, size_t, BOARD &);
-    bool            _isTileRightPlaced(int val, BOARD &);
+    int                 _getPermutations (std::list<int> &);
+    std::list<int>      _getSerpent (std::vector<std::vector<int>> &);
+    BOARD               _buildFinalBoard (void);
+    int                 _getManhattanDistance (size_t, size_t, BOARD &);
+    bool                _isTileRightPlaced(int val, BOARD &);
+    std::list<Node>     _getAvailableMoves(Node &);
 };
 
 #endif
