@@ -1,6 +1,6 @@
 #include <Parser.class.hpp>
+#include <Utils.class.hpp>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 Parser::Parser() {
@@ -34,11 +34,10 @@ int const & Parser::getSize(void) const {
 }
 
 BOARD Parser::parseFile(void) {
-    if (this->_fileName.empty()) {
-        // FIXME
-        throw new std::exception();
-    }
     std::ifstream file(this->_fileName);
+    if (file.fail()) {
+        throw Parser::MapNotFoundException();
+    }
     std::string line;
     BOARD board;
     int i = 0;

@@ -17,6 +17,12 @@ public:
     static int getHammingDistance(BOARD &);
     static std::list<BOARD> getAvailableMoves(BOARD &);
     static void printBoard(BOARD &);
+
+    class NotFoundException : public std::exception {
+        virtual const char * what (void) const throw () {
+            return "Error: Not found.";
+        }
+    };
 };
 
 #endif

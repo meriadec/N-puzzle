@@ -9,10 +9,14 @@ int main (int ac, char **av)
     std::cerr << "Usage: ./npuzzle <map>" << std::endl;
     return (1);
   }
-  Parser parser(av[1]);
-  BOARD board = parser.parseFile();
-  Puzzle puzzle(board);
-  Utils::printBoard(board);
+  try {
+    Parser parser(av[1]);
+    BOARD board = parser.parseFile();
+    Puzzle puzzle(board);
+    Utils::printBoard(board);
+  } catch (Parser::MapNotFoundException & e) {
+    std::cout << e.what() << std::endl;
+  }
 
   return (0);
 }

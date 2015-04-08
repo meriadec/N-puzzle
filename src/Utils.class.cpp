@@ -16,8 +16,7 @@ std::pair<size_t, size_t> Utils::getPos(int val, BOARD & board) {
         }
         ++y;
     }
-    // FIXME
-    throw std::exception();
+    throw Utils::NotFoundException();
 }
 
 std::pair<size_t, size_t> Utils::getFinalPos(int val, BOARD & board) {
