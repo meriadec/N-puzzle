@@ -66,8 +66,8 @@ std::list<int> Puzzle::_getSerpent (BOARD & v)
 
     while (deep < len) {
         y = x = deep;
-        while (x < len - deep) { serpent.push_back(v[y][x++]); } x = (x > 0 ? --x : x); ++y;
-        while (y < len - deep) { serpent.push_back(v[y++][x]); } x = (x > 0 ? --x : x); y = (y > 0 ? --y : y);
+        while (x < len - deep) { serpent.push_back(v[y][x++]); } --x; ++y;
+        while (y < len - deep) { serpent.push_back(v[y++][x]); } --x; --y;
         while (x > deep) { serpent.push_back(v[y][x--]); }
         while (y > deep) { serpent.push_back(v[y--][x]); }
         ++deep;
