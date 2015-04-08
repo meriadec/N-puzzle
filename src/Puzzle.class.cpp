@@ -146,3 +146,10 @@ int Puzzle::getHammingDistance (BOARD &board) {
     }
     return total;
 }
+
+/**
+ * Solves the puzzle. Obviously.
+ */
+void Puzzle::solve (void) {
+    
+}

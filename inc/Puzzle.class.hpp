@@ -15,6 +15,7 @@ public:
     bool            isSolvable (void);
     int             getSumManhattanDistances (BOARD &);
     int             getHammingDistance (BOARD &);
+    void            solve (void);
 
 private:
 
