@@ -7,7 +7,7 @@ Puzzle::Puzzle(Puzzle const &src) {
 }
 
 Puzzle::Puzzle(BOARD const & board) : _board(board) {
-    this->_finalBoard = this->_buildFinalBoard();
+    this->_buildFinalBoard();
 }
 
 Puzzle::Puzzle(void) {
@@ -77,8 +77,8 @@ std::list<int> Puzzle::_getSerpent (BOARD & v)
     return serpent;
 }
 
-BOARD Puzzle::_buildFinalBoard (void) {
-    BOARD       board;
+void Puzzle::_buildFinalBoard (void) {
+    BOARD &     board = this->_finalBoard;
     size_t      deep = 0;
     size_t      len = this->_board.size();
     size_t      y = 0, x = 0;
@@ -101,7 +101,6 @@ BOARD Puzzle::_buildFinalBoard (void) {
     }
     std::pair<size_t, size_t> pos = Utils::getPos(static_cast<int>(len * len), board);
     board[pos.first][pos.second] = 0;
-    return board;
 }
 
 int Puzzle::_getManhattanDistance (size_t j, size_t i, BOARD & board)

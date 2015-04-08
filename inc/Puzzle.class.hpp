@@ -28,7 +28,7 @@ private:
 
     int                 _getPermutations (std::list<int> &);
     std::list<int>      _getSerpent (std::vector<std::vector<int>> &);
-    BOARD               _buildFinalBoard (void);
+    void                _buildFinalBoard (void);
     int                 _getManhattanDistance (size_t, size_t, BOARD &);
     bool                _isTileRightPlaced(int val, BOARD &);
     std::list<Node>     _getAvailableMoves(Node &);
