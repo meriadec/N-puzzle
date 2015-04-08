@@ -6,6 +6,7 @@ Puzzle::Puzzle(Puzzle const &src) {
 }
 
 Puzzle::Puzzle(BOARD const & board) : _board(board) {
+    this->_finalBoard = this->_buildFinalBoard();
 }
 
 Puzzle::Puzzle(void) {
@@ -49,7 +50,7 @@ bool Puzzle::isSolvable(void)
     std::list<int> serpent = this->_getSerpent(this->_board);
     int nbPermut = this->_getPermutations(serpent);
     std::pair<size_t, size_t> pos = Utils::getPos(0, this->_board);
-    int dist = Utils::getManhattanDistance(pos.first, pos.second, this->_board);
+    int dist = this->_getManhattanDistance(pos.first, pos.second, this->_board);
 
     return (dist % 2 == nbPermut % 2);
 }
@@ -73,4 +74,75 @@ std::list<int> Puzzle::_getSerpent (BOARD & v)
         ++deep;
     }
     return serpent;
+}
+
+BOARD Puzzle::_buildFinalBoard (void) {
+    BOARD       board;
+    size_t      deep = 0;
+    size_t      len = this->_board.size();
+    size_t      y = 0, x = 0;
+    int         i = 1;
+
+    for (y = 0; y < len; y++) {
+        std::vector<int> row;
+        for (x = 0; x < len; x++) {
+            row.push_back(0);
+        }
+        board.push_back(row);
+    }
+    while (deep < len - 1) {
+        y = x = deep;
+        while (x < len - deep) { board[y][x++] = i++; } --x; ++y;
+        while (y < len - deep) { board[y++][x] = i++; } --x; --y;
+        while (x > deep) { board[y][x--] = i++; }
+        while (y > deep) { board[y--][x] = i++; }
+        ++deep;
+    }
+    std::pair<size_t, size_t> pos = Utils::getPos(static_cast<int>(len * len), board);
+    board[pos.first][pos.second] = 0;
+    return board;
+}
+
+int Puzzle::_getManhattanDistance (size_t j, size_t i, BOARD & board)
+{
+    int val = board[j][i];
+    std::pair<size_t, size_t> finalPos = Utils::getPos(val, this->_finalBoard);
+    size_t y = finalPos.first, x = finalPos.second;
+    return (abs(static_cast<int>(j - y)) + abs(static_cast<int>(i - x)));
+}
+
+bool Puzzle::_isTileRightPlaced(int val, BOARD & board) {
+    return Utils::getPos(val, board) == Utils::getPos(val, this->_finalBoard);
+}
+
+/**
+ * Heuristic 1
+ */
+int Puzzle::getSumManhattanDistances (BOARD &board) {
+    int dist = 0;
+    unsigned long len = board.size();
+
+    for (size_t i = 0; i < len; ++i) {
+        for (size_t j = 0; j < len; ++j) {
+            dist += this->_getManhattanDistance(j, i, board);
+        }
+    }
+    return dist;
+}
+
+/**
+ * Heuristic 2
+ */
+int Puzzle::getHammingDistance (BOARD &board) {
+    int total = 0;
+    unsigned long len = board.size();
+
+    for (size_t i = 0; i < len; ++i) {
+        for (size_t j = 0; j < len; ++j) {
+            if (this->_isTileRightPlaced(board[j][i], board)) {
+                total++;
+            }
+        }
+    }
+    return total;
 }
