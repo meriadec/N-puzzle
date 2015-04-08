@@ -8,6 +8,7 @@ Puzzle::Puzzle(Puzzle const &src) {
 
 Puzzle::Puzzle(BOARD const & board) : _board(board) {
     this->_buildFinalBoard();
+    this->_buildFinalPositions();
 }
 
 Puzzle::Puzzle(void) {
@@ -106,7 +107,7 @@ void Puzzle::_buildFinalBoard (void) {
 int Puzzle::_getManhattanDistance (size_t j, size_t i, BOARD & board)
 {
     int val = board[j][i];
-    std::pair<size_t, size_t> finalPos = Utils::getPos(val, this->_finalBoard);
+    std::pair<size_t, size_t> finalPos = this->_finalPositions[val];
     size_t y = finalPos.first, x = finalPos.second;
     return (abs(static_cast<int>(j - y)) + abs(static_cast<int>(i - x)));
 }
@@ -245,4 +246,11 @@ void Puzzle::solve (void) {
             }
         }
     }
+}
+
+void Puzzle::_buildFinalPositions (void) {
+    int     i;
+    int     max = static_cast<int>(this->_finalBoard.size() * this->_finalBoard.size());
+
+    for (i = 0; i < max; i++) { this->_finalPositions[i] = Utils::getPos(i, this->_finalBoard); }
 }
