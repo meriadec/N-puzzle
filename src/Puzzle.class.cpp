@@ -204,6 +204,12 @@ int Puzzle::getHammingDistance (BOARD &board) {
  * Solves the puzzle. Obviously.
  */
 void Puzzle::solve (void) {
+
+    if (!this->isSolvable()) {
+        std::cout << "This puzzle is not solvable sorry!" << std::endl;
+        return;
+    }
+
     std::list<Node> closed;
     Node start;
     start.board = this->_board;
