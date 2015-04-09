@@ -220,6 +220,14 @@ void Puzzle::solve (void) {
         return;
     }
 
+    std::cout << std::endl << "\033[037mSearch in progress...\033[0m" << std::endl << std::endl;
+
+    // informations about the algorithm
+    t_infos infos;
+    infos.sizeCpl = 0;
+    infos.timeCpl = 0;
+    size_t tmp;
+
     std::list<Node> closed;
     Node start;
     start.board = this->_board;
@@ -231,10 +239,12 @@ void Puzzle::solve (void) {
     opened.push_back(start);
 
     while (!opened.empty()) {
+        ++infos.timeCpl;
+        tmp = opened.size() + closed.size();
+        if (tmp > infos.sizeCpl) { infos.sizeCpl = tmp; }
         Node current = opened.front();
         if (current.h == 0) {
-            Utils::printBoard(current.board);
-            std::cout << "SOLVED" << std::endl;
+            Utils::printInfos(infos);
             return;
         } else {
             opened.pop_front();

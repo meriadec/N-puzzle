@@ -12,6 +12,7 @@ public:
     static std::pair<size_t, size_t> getPos(int, BOARD const &);
     static void iterBoard(BOARD &, void (*)(void));
     static void printBoard(BOARD const &);
+    static void printInfos(t_infos & infos);
     static void heuristicInsertInList(Node &, std::list<Node> &);
 
     class NotFoundException : public std::exception {
