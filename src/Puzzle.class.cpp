@@ -126,53 +126,62 @@ bool Puzzle::_isTileRightPlaced(int val, BOARD const & board) const {
     return Utils::getPos(val, board) == this->_finalPositions.at(val);
 }
 
-std::list<Node> Puzzle::_getAvailableMoves(Node & node) {
-    std::list<Node> moves;
-    Node newNode;
+std::list<Node *> Puzzle::_getAvailableMoves(Node & node) {
+
+    // the current board
     BOARD & board = node.board;
 
+    // the returned list
+    std::list<Node *> moves;
+
+    // the position of the empty cell
     std::pair<size_t, size_t> pos = Utils::getPos(0, board);
     size_t j = pos.first, i = pos.second;
+
     unsigned long size = board.size();
 
     if (j > 0) {
-        newNode.board = board;
-        newNode.board[j][i] = newNode.board[j - 1][i];
-        newNode.board[j - 1][i] = 0;
-        newNode.parent = &node;
-        newNode.h = (this->*_heuristic)(newNode.board);
-        newNode.g = node.g + 1;
-        newNode.f = node.h + node.g;
+        Node * newNode = new Node();
+        newNode->board = board;
+        newNode->board[j][i] = newNode->board[j - 1][i];
+        newNode->board[j - 1][i] = 0;
+        newNode->parent = &node;
+        newNode->h = (this->*_heuristic)(newNode->board);
+        newNode->g = node.g + 1;
+        newNode->f = node.h + node.g;
         moves.push_back(newNode);
     }
     if (i > 0) {
-        newNode.board = board;
-        newNode.board[j][i] = newNode.board[j][i - 1];
-        newNode.board[j][i - 1] = 0;
-        newNode.parent = &node;
-        newNode.h = (this->*_heuristic)(newNode.board);
-        newNode.g = node.g + 1;
-        newNode.f = node.h + node.g;
+        Node * newNode = new Node();
+        newNode->board = board;
+        newNode->board[j][i] = newNode->board[j][i - 1];
+        newNode->board[j][i - 1] = 0;
+        newNode->parent = &node;
+        newNode->h = (this->*_heuristic)(newNode->board);
+        newNode->g = node.g + 1;
+        newNode->f = node.h + node.g;
         moves.push_back(newNode);
     }
     if (j < size - 1) {
-        newNode.board = board;
-        newNode.board[j][i] = newNode.board[j + 1][i];
-        newNode.board[j + 1][i] = 0;
-        newNode.parent = &node;
-        newNode.h = (this->*_heuristic)(newNode.board);
-        newNode.g = node.g + 1;
-        newNode.f = node.h + node.g;
+        Node * newNode = new Node();
+        newNode->board = board;
+        newNode->board[j][i] = newNode->board[j + 1][i];
+        newNode->board[j + 1][i] = 0;
+        newNode->parent = &node;
+        newNode->h = (this->*_heuristic)(newNode->board);
+        newNode->g = node.g + 1;
+        newNode->f = node.h + node.g;
         moves.push_back(newNode);
     }
     if (i < size - 1) {
-        newNode.board = board;
-        newNode.board[j][i] = newNode.board[j][i + 1];
-        newNode.board[j][i + 1] = 0;
-        newNode.parent = &node;
-        newNode.h = (this->*_heuristic)(newNode.board);
-        newNode.g = node.g + 1;
-        newNode.f = node.h + node.g;
+        Node * newNode = new Node();
+        newNode->board = board;
+        newNode->board[j][i] = newNode->board[j][i + 1];
+        newNode->board[j][i + 1] = 0;
+        newNode->parent = &node;
+        newNode->h = (this->*_heuristic)(newNode->board);
+        newNode->g = node.g + 1;
+        newNode->f = node.h + node.g;
         moves.push_back(newNode);
     }
     return moves;
@@ -228,36 +237,64 @@ void Puzzle::solve (void) {
     infos.timeCpl = 0;
     size_t tmp;
 
-    std::list<Node> closed;
-    Node start;
-    start.board = this->_board;
-    start.parent = NULL;
-    start.h = (this->*_heuristic)(start.board);
-    start.g = 0;
-    start.f = start.g + start.h;
-    std::list<Node> opened;
+    // lists used in algorithm
+    std::list<Node *> closed;
+    std::list<Node *> opened;
+
+    // first node, initial state
+    Node * start = new Node();
+    start->board = this->_board;
+    start->parent = NULL;
+    start->h = (this->*_heuristic)(start->board);
+    start->g = 0;
+    start->f = start->g + start->h;
+
+    // pushing first node in opened set
     opened.push_back(start);
 
     while (!opened.empty()) {
+
+        // increment the time complexity
         ++infos.timeCpl;
+
+        // increment the size complexity
         tmp = opened.size() + closed.size();
         if (tmp > infos.sizeCpl) { infos.sizeCpl = tmp; }
-        Node current = opened.front();
-        if (current.h == 0) {
+
+        // get current node, on top of the opened list
+        Node * current = opened.front();
+
+        if (current->h == 0) {
+
+            // the puzzle is solved
             Utils::printInfos(infos);
+
+            // clean nodes in each lists
+            Utils::cleanList(opened);
+            Utils::cleanList(closed);
+
             return;
+
         } else {
+
+            // removing first node of opened set
             opened.pop_front();
+
+            // pushing current node in closed
             closed.push_front(current);
-            std::list<Node> moves = this->_getAvailableMoves(current);
-            std::list<Node>::iterator it;
-            for (it = moves.begin(); it != moves.end(); ++it) {
-                if (std::find(opened.begin(), opened.end(), *it) == opened.end() && std::find(closed.begin(), closed.end(), *it) == closed.end()) {
+
+            // getting all availables moves
+            std::list<Node *> moves = this->_getAvailableMoves(*current);
+
+            // looping in them
+            for (std::list<Node *>::iterator it = moves.begin(); it != moves.end(); ++it) {
+
+                if (!Utils::isBoardInList(*it, opened) && !Utils::isBoardInList(*it, closed)) {
                     Utils::heuristicInsertInList(*it, opened);
                 } else {
-                    if ((*it).f > current.f + 1) {
-                        (*it).g = current.g + 1;
-                        if (std::find(closed.begin(), closed.end(), *it) != closed.end()) {
+                    if ((*it)->f > current->f + 1) {
+                        (*it)->g = current->g + 1;
+                        if (Utils::isBoardInList(*it, closed)) {
                             closed.remove(*it);
                             Utils::heuristicInsertInList(*it, opened);
                         }

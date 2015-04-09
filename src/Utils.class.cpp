@@ -19,16 +19,6 @@ std::pair<size_t, size_t> Utils::getPos(int val, BOARD const & board) {
     throw Utils::NotFoundException();
 }
 
-void Utils::iterBoard(BOARD & board, void (*func)(void)) {
-    BOARD::iterator row;
-    for (row = board.begin(); row != board.end() ; ++row) {
-        std::vector<int>::iterator col;
-        for (col = (*row).begin(); col != (*row).end() ; ++col) {
-            func();
-        }
-    }
-}
-
 void Utils::printBoard(BOARD const & board) {
     BOARD::const_iterator row;
     for (row = board.begin(); row != board.end() ; ++row) {
@@ -40,10 +30,10 @@ void Utils::printBoard(BOARD const & board) {
     }
 }
 
-void Utils::heuristicInsertInList(Node & node, std::list<Node> & list) {
-    std::list<Node>::iterator it;
+void Utils::heuristicInsertInList(Node * node, std::list<Node *> & list) {
+    std::list<Node *>::iterator it;
     for (it = list.begin(); it != list.end(); ++it) {
-        if (node.h < (*it).h) {
+        if (node->h < (*it)->h) {
             list.insert(it, node);
             return;
         }
@@ -56,4 +46,19 @@ void Utils::printInfos (t_infos & infos) {
     std::cout << "complexity in time: \033[33m" << infos.timeCpl << "\033[0m" << std::endl;
     std::cout << "complexity in size: \033[33m" << infos.sizeCpl << "\033[0m" << std::endl;
     std::cout << "\033[35m------------------------\033[0m" << std::endl << std::endl;
+}
+
+bool Utils::isBoardInList (Node *node, std::list<Node *> &list) {
+    for (std::list<Node *>::iterator it = list.begin(); it != list.end(); ++it) {
+        if ((*it)->h == node->h && (*it)->board == node->board) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Utils::cleanList (std::list<Node *> & list) {
+    for (std::list<Node *>::iterator it = list.begin(); it != list.end(); ++it) {
+        delete *it;
+    }
 }
