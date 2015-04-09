@@ -41,7 +41,20 @@ void Utils::heuristicInsertInList(Node * node, std::list<Node *> & list) {
     list.insert(it, node);
 }
 
-void Utils::printInfos (t_infos & infos) {
+void Utils::printInfos (Node * node, t_infos & infos) {
+
+    std::list<Node *> list;
+
+    while (node) {
+        list.push_front(node);
+        node = node->parent;
+    }
+
+    for (std::list<Node *>::iterator it = list.begin(); it != list.end(); ++it) {
+        Utils::printBoard((*it)->board);
+        std::cout << std::endl;
+    }
+
     std::cout << "\033[35m-- STATISTICS ----------\033[0m" << std::endl;
     std::cout << "complexity in time: \033[33m" << infos.timeCpl << "\033[0m" << std::endl;
     std::cout << "complexity in size: \033[33m" << infos.sizeCpl << "\033[0m" << std::endl;

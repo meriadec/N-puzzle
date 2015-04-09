@@ -11,7 +11,7 @@ public:
 
     static std::pair<size_t, size_t> getPos(int, BOARD const &);
     static void printBoard(BOARD const &);
-    static void printInfos(t_infos & infos);
+    static void printInfos(Node *, t_infos & infos);
     static void heuristicInsertInList(Node *, std::list<Node *> &);
     static bool isBoardInList (Node *, std::list<Node *> &);
     static void cleanList (std::list<Node *> &);

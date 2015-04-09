@@ -267,7 +267,7 @@ void Puzzle::solve (void) {
         if (current->h == 0) {
 
             // the puzzle is solved
-            Utils::printInfos(infos);
+            Utils::printInfos(current, infos);
 
             // clean nodes in each lists
             Utils::cleanList(opened);
