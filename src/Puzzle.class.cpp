@@ -46,7 +46,7 @@ int Puzzle::_getPermutations (std::list<int> & list)
     while (it != list.end()) {
         tmp = std::next(it, 1);
         while (tmp != list.end()) {
-            if (*tmp < *it && *tmp != 0) { ++iter; }
+            if (*tmp < *it) { ++iter; }
             ++tmp;
         }
         ++it;
