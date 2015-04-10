@@ -46,7 +46,7 @@ int Puzzle::_getPermutations (std::list<int> & list)
     while (it != list.end()) {
         tmp = std::next(it, 1);
         while (tmp != list.end()) {
-            if (*tmp < *it) { ++iter; }
+            if (*tmp < *it && *tmp != 0) { ++iter; }
             ++tmp;
         }
         ++it;
@@ -64,7 +64,7 @@ bool Puzzle::isSolvable(void)
     std::pair<size_t, size_t> pos = Utils::getPos(0, this->_board);
     int dist = this->_getManhattanDistance(pos.first, pos.second, this->_board);
 
-    return (dist % 2 == nbPermut % 2);
+    return (dist == 1 || dist % 2 == nbPermut % 2);
 }
 
 /**
