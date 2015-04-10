@@ -61,13 +61,13 @@ void Utils::printInfos (Node * node, t_infos & infos) {
     std::cout << "\033[35m------------------------\033[0m" << std::endl << std::endl;
 }
 
-bool Utils::isBoardInList (Node *node, std::list<Node *> &list) {
+Node * Utils::isBoardInList (Node *node, std::list<Node *> &list) {
     for (std::list<Node *>::iterator it = list.begin(); it != list.end(); ++it) {
         if ((*it)->h == node->h && (*it)->board == node->board) {
-            return true;
+            return *it;
         }
     }
-    return false;
+    return NULL;
 }
 
 void Utils::cleanList (std::list<Node *> & list) {

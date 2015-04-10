@@ -13,7 +13,7 @@ public:
     static void printBoard(BOARD const &);
     static void printInfos(Node *, t_infos & infos);
     static void heuristicInsertInList(Node *, std::list<Node *> &);
-    static bool isBoardInList (Node *, std::list<Node *> &);
+    static Node * isBoardInList (Node *, std::list<Node *> &);
     static void cleanList (std::list<Node *> &);
 
     class NotFoundException : public std::exception {

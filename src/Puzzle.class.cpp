@@ -294,8 +294,9 @@ void Puzzle::solve (void) {
                 } else {
                     if ((*it)->f > current->f + 1) {
                         (*it)->g = current->g + 1;
-                        if (Utils::isBoardInList(*it, closed)) {
-                            closed.remove(*it);
+                        Node * searched;
+                        if ((searched = Utils::isBoardInList(*it, closed))) {
+                            closed.remove(searched);
                             Utils::heuristicInsertInList(*it, opened);
                         } else {
                             delete *it;
