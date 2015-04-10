@@ -297,7 +297,11 @@ void Puzzle::solve (void) {
                         if (Utils::isBoardInList(*it, closed)) {
                             closed.remove(*it);
                             Utils::heuristicInsertInList(*it, opened);
+                        } else {
+                            delete *it;
                         }
+                    } else {
+                        delete *it;
                     }
                 }
             }
