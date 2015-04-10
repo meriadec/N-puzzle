@@ -298,12 +298,8 @@ void Puzzle::solve (void) {
                         if ((searched = Utils::isBoardInList(*it, closed))) {
                             closed.remove(searched);
                             Utils::heuristicInsertInList(*it, opened);
-                        } else {
-                            delete *it;
-                        }
-                    } else {
-                        delete *it;
-                    }
+                        } else { delete *it; }
+                    } else { delete *it; }
                 }
             }
         }
