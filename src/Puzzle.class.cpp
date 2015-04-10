@@ -289,6 +289,7 @@ void Puzzle::solve (void) {
             // looping in them
             for (std::list<Node *>::iterator it = moves.begin(); it != moves.end(); ++it) {
 
+                // push in opened if current move is neither in opened, neither in closed
                 if (!Utils::isBoardInList(*it, opened) && !Utils::isBoardInList(*it, closed)) {
                     Utils::heuristicInsertInList(*it, opened);
                 } else {
