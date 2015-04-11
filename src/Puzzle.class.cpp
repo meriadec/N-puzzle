@@ -26,6 +26,8 @@ void Puzzle::setHeuristic(std::string & heuristic) {
         this->_heuristic = &Puzzle::getSumManhattanDistances;
     } else if (heuristic == "hamming") {
         this->_heuristic = &Puzzle::getHammingDistance;
+    } else if (heuristic == "third") {
+        this->_heuristic = &Puzzle::getThirdHeuristicDistance;
     } else {
         throw UnknownHeuristicException();
     }
@@ -220,6 +222,22 @@ int Puzzle::getHammingDistance (BOARD const & board) const {
 }
 
 /**
+ * Heuristic 3
+ */
+int Puzzle::getThirdHeuristicDistance (BOARD const & board) const {
+    int total = static_cast<int>(board.size() * board.size()) * 2;
+    unsigned long len = board.size();
+
+    for (size_t i = 0; i < len; ++i) {
+        for (size_t j = 0; j < len; ++j) {
+            if (this->_isRightRow(board[j][i], j)) { total--; }
+            if (this->_isRightCol(board[j][i], i)) { total--; }
+        }
+    }
+    return total;
+}
+
+/**
  * Solves the puzzle. Obviously.
  */
 void Puzzle::solve (void) {
@@ -312,4 +330,20 @@ void Puzzle::_buildFinalPositions (void) {
     int     max = static_cast<int>(this->_finalBoard.size() * this->_finalBoard.size());
 
     for (i = 0; i < max; i++) { this->_finalPositions[i] = Utils::getPos(i, this->_finalBoard); }
+}
+
+bool Puzzle::_isRightRow (int val, size_t row) const {
+    size_t len = this->_finalBoard.size();
+    for (size_t i = 0; i < len; i++) {
+        if (this->_finalBoard[row][i] == val) { return true; }
+    }
+    return false;
+}
+
+bool Puzzle::_isRightCol (int val, size_t col) const {
+    size_t len = this->_finalBoard.size();
+    for (size_t i = 0; i < len; i++) {
+        if (this->_finalBoard[i][col] == val) { return true; }
+    }
+    return false;
 }

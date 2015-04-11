@@ -19,6 +19,7 @@ public:
     bool            isSolvable (void);
     int             getSumManhattanDistances (BOARD const &) const;
     int             getHammingDistance (BOARD const &) const;
+    int             getThirdHeuristicDistance (BOARD const &) const;
     void            solve (void);
     void            setHeuristic(std::string &);
 
@@ -47,6 +48,8 @@ private:
     int                 _getManhattanDistance (size_t, size_t, BOARD const &) const;
     bool                _isTileRightPlaced(int val, BOARD const &) const;
     std::list<Node *>   _getAvailableMoves(Node &);
+    bool                _isRightRow (int, size_t) const;
+    bool                _isRightCol (int, size_t) const;
 };
 
 #endif
