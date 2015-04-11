@@ -288,32 +288,14 @@ void Puzzle::solve (void) {
             std::list<Node *> moves = this->_getAvailableMoves(current);
 
             // looping in them
-            for (std::list<Node *>::iterator it = moves.begin(); it != moves.end(); ++it) {
+            for (std::list<Node *>::iterator move = moves.begin(); move != moves.end(); ++move) {
 
-                // search move in sets
-                Node * stateInOpen = Utils::isBoardInList(*it, opened);
-                Node * stateInClose = Utils::isBoardInList(*it, closed);
+                if (Utils::isBoardInList(*move, closed)) { continue; }
 
-                if (!stateInOpen && !stateInClose) {
+                Node * stateInOpen = Utils::isBoardInList(*move, opened);
 
-                    // push in opened if current move is neither in opened, neither in closed
-                    Utils::heuristicInsertInList(*it, opened);
-
-                } else {
-
-                    // comparing things
-                    if ((*it)->g > current->g + 1) {
-
-                        (*it)->g = current->g + 1;
-
-                        Node * searched = Utils::isBoardInList(*it, closed);
-
-                        if (searched) {
-                            closed.remove(searched);
-                            Utils::heuristicInsertInList(*it, opened);
-                        } else { delete *it; }
-
-                    } else { delete *it; }
+                if (!stateInOpen) {
+                    Utils::heuristicInsertInList(*move, opened);
                 }
             }
         }
