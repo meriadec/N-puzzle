@@ -22,11 +22,14 @@ public:
     int             getThirdHeuristicDistance (BOARD const &) const;
     void            solve (void);
     void            setHeuristic(std::string &);
+    void            setBoard(BOARD);
+    BOARD           getBoard(void);
+    BOARD           getFinalBoard(void);
 
     class UnknownHeuristicException : public std::exception {
     public:
         virtual const char * what (void) const throw () {
-            return "Error: Unknown heuristic.";
+            return "Unknown heuristic.";
         }
     };
 

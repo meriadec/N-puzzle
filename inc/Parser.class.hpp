@@ -20,7 +20,7 @@ public:
     class MapNotFoundException : public std::exception {
     public:
         virtual const char * what (void) const throw () {
-            return "Error: Map not found.";
+            return "Map not found.";
         }
     };
 

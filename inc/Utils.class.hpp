@@ -15,10 +15,12 @@ public:
     static void heuristicInsertInList(Node *, std::list<Node *> &);
     static Node * isBoardInList (Node *, std::list<Node *> &);
     static void cleanList (std::list<Node *> &);
+    static BOARD generateBoard (size_t size, size_t iterations);
+    static BOARD generateFinalBoard (size_t size);
 
     class NotFoundException : public std::exception {
         virtual const char * what (void) const throw () {
-            return "Error: Not found.";
+            return "Not found.";
         }
     };
 

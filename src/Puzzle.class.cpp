@@ -12,6 +12,7 @@ Puzzle::Puzzle(BOARD const & board) : _board(board) {
 }
 
 Puzzle::Puzzle(void) {
+    this->_heuristic = &Puzzle::getSumManhattanDistances;
 }
 
 Puzzle::~Puzzle(void) {
@@ -31,6 +32,12 @@ void Puzzle::setHeuristic(std::string & heuristic) {
     } else {
         throw UnknownHeuristicException();
     }
+}
+
+void Puzzle::setBoard (BOARD board) {
+    this->_board = board;
+    this->_buildFinalBoard();
+    this->_buildFinalPositions();
 }
 
 /**
@@ -91,29 +98,7 @@ std::list<int> Puzzle::_getSerpent (BOARD & v)
 }
 
 void Puzzle::_buildFinalBoard (void) {
-    BOARD &     board = this->_finalBoard;
-    size_t      deep = 0;
-    size_t      len = this->_board.size();
-    size_t      y = 0, x = 0;
-    int         i = 1;
-
-    for (y = 0; y < len; y++) {
-        std::vector<int> row;
-        for (x = 0; x < len; x++) {
-            row.push_back(0);
-        }
-        board.push_back(row);
-    }
-    while (deep < len - 1) {
-        y = x = deep;
-        while (x < len - deep) { board[y][x++] = i++; } --x; ++y;
-        while (y < len - deep) { board[y++][x] = i++; } --x; --y;
-        while (x > deep) { board[y][x--] = i++; }
-        while (y > deep) { board[y--][x] = i++; }
-        ++deep;
-    }
-    std::pair<size_t, size_t> pos = Utils::getPos(static_cast<int>(len * len), board);
-    board[pos.first][pos.second] = 0;
+    this->_finalBoard = Utils::generateFinalBoard(this->_board.size());
 }
 
 int Puzzle::_getManhattanDistance (size_t j, size_t i, BOARD const & board) const
@@ -243,7 +228,8 @@ int Puzzle::getThirdHeuristicDistance (BOARD const & board) const {
 void Puzzle::solve (void) {
 
     if (!this->isSolvable()) {
-        std::cout << "This puzzle is not solvable sorry!" << std::endl;
+        Utils::printBoard(this->_board);
+        std::cout << "\nThis puzzle is not solvable sorry!\n" << std::endl;
         return;
     }
 
@@ -359,4 +345,12 @@ bool Puzzle::_isRightCol (int val, size_t col) const {
         if (this->_finalBoard[i][col] == val) { return true; }
     }
     return false;
+}
+
+BOARD Puzzle::getBoard (void) {
+    return this->_board;
+}
+
+BOARD Puzzle::getFinalBoard (void) {
+    return this->_finalBoard;
 }

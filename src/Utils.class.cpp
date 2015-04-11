@@ -76,3 +76,38 @@ void Utils::cleanList (std::list<Node *> & list) {
         delete *it;
     }
 }
+
+BOARD Utils::generateBoard (size_t size, size_t iterations) {
+    BOARD board = Utils::generateFinalBoard(size);
+    int tmp = board[0][1];
+    board[0][1] = board[1][0];
+    board[1][0] = tmp;
+    return board;
+}
+
+BOARD Utils::generateFinalBoard (size_t len) {
+    BOARD board;
+
+    size_t      deep = 0;
+    size_t      y = 0, x = 0;
+    int         i = 1;
+
+    for (y = 0; y < len; y++) {
+        std::vector<int> row;
+        for (x = 0; x < len; x++) {
+            row.push_back(0);
+        }
+        board.push_back(row);
+    }
+    while (deep < len - 1) {
+        y = x = deep;
+        while (x < len - deep) { board[y][x++] = i++; } --x; ++y;
+        while (y < len - deep) { board[y++][x] = i++; } --x; --y;
+        while (x > deep) { board[y][x--] = i++; }
+        while (y > deep) { board[y--][x] = i++; }
+        ++deep;
+    }
+    std::pair<size_t, size_t> pos = Utils::getPos(static_cast<int>(len * len), board);
+    board[pos.first][pos.second] = 0;
+    return board;
+}

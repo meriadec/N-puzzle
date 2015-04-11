@@ -12,4 +12,16 @@ typedef struct      s_infos
     size_t      sizeCpl;
 }                   t_infos;
 
+class MapTooSmallException : public std::exception {
+    virtual const char * what (void) const throw () { return "Board is too small."; }
+};
+
+class IterationsTooSmallException : public std::exception {
+    virtual const char * what (void) const throw () { return "iterations need to be > 0"; }
+};
+
+class MissingArgException : public std::exception {
+    virtual const char * what (void) const throw () { return "Missing argument."; }
+};
+
 #endif
