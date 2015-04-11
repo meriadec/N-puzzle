@@ -1,4 +1,5 @@
 #include <Utils.class.hpp>
+#include <stdlib.h>
 #include <iomanip>
 
 std::pair<size_t, size_t> Utils::getPos(int val, BOARD const & board) {
@@ -79,9 +80,18 @@ void Utils::cleanList (std::list<Node *> & list) {
 
 BOARD Utils::generateBoard (size_t size, size_t iterations) {
     BOARD board = Utils::generateFinalBoard(size);
-    int tmp = board[0][1];
-    board[0][1] = board[1][0];
-    board[1][0] = tmp;
+    for (size_t iter = 0; iter < iterations; ++iter) {
+        std::pair<size_t,size_t> pos = Utils::getPos(0, board);
+        std::vector<std::pair<size_t,size_t>> moves;
+        if (pos.first > 0) { moves.push_back(std::make_pair(pos.first - 1, pos.second)); }
+        if (pos.second > 0) { moves.push_back(std::make_pair(pos.first, pos.second - 1)); }
+        if (pos.first < size - 1) { moves.push_back(std::make_pair(pos.first + 1, pos.second)); }
+        if (pos.second < size - 1) { moves.push_back(std::make_pair(pos.first, pos.second + 1)); }
+        std::pair<size_t,size_t> chosen = moves[static_cast<int>(rand() % moves.size())];
+        int val = board[chosen.first][chosen.second];
+        board[chosen.first][chosen.second] = 0;
+        board[pos.first][pos.second] = val;
+    }
     return board;
 }
 

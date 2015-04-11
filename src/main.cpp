@@ -1,11 +1,16 @@
 #include <npuzzle.hpp>
 #include <sstream>
+#include <stdlib.h>
+#include <time.h>
 #include <Parser.class.hpp>
 #include <Puzzle.class.hpp>
 #include <Utils.class.hpp>
 
 int main (int ac, char **av)
 {
+
+  srand(time(NULL));
+
   if (ac < 2) {
     std::cerr << "Usage: ./npuzzle [-f file] [-s size] [-i iterations] [-h <manhattan|hamming|third>]" << std::endl;
     return -1;
@@ -47,7 +52,7 @@ int main (int ac, char **av)
         std::stringstream ss;
         ss << av[++i];
         ss >> sizeToGenerate;
-        if (sizeToGenerate < 3) { throw MapTooSmallException(); }
+        if (sizeToGenerate < 3 || sizeToGenerate > 15) { throw BadMapDimensionsException(); }
       }
 
       // -> iterations option

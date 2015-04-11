@@ -12,8 +12,8 @@ typedef struct      s_infos
     size_t      sizeCpl;
 }                   t_infos;
 
-class MapTooSmallException : public std::exception {
-    virtual const char * what (void) const throw () { return "Board is too small."; }
+class BadMapDimensionsException : public std::exception {
+    virtual const char * what (void) const throw () { return "Wrong dimensions."; }
 };
 
 class IterationsTooSmallException : public std::exception {
