@@ -47,7 +47,7 @@ private:
     void                _buildFinalPositions (void);
     int                 _getManhattanDistance (size_t, size_t, BOARD const &) const;
     bool                _isTileRightPlaced(int val, BOARD const &) const;
-    std::list<Node *>   _getAvailableMoves(Node &);
+    std::list<Node *>   _getAvailableMoves(Node *);
     bool                _isRightRow (int, size_t) const;
     bool                _isRightCol (int, size_t) const;
 };

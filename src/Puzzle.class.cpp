@@ -128,10 +128,10 @@ bool Puzzle::_isTileRightPlaced(int val, BOARD const & board) const {
     return Utils::getPos(val, board) == this->_finalPositions.at(val);
 }
 
-std::list<Node *> Puzzle::_getAvailableMoves(Node & node) {
+std::list<Node *> Puzzle::_getAvailableMoves(Node * parent) {
 
     // the current board
-    BOARD & board = node.board;
+    BOARD & board = parent->board;
 
     // the returned list
     std::list<Node *> moves;
@@ -147,10 +147,10 @@ std::list<Node *> Puzzle::_getAvailableMoves(Node & node) {
         newNode->board = board;
         newNode->board[j][i] = newNode->board[j - 1][i];
         newNode->board[j - 1][i] = 0;
-        newNode->parent = &node;
+        newNode->parent = parent;
         newNode->h = (this->*_heuristic)(newNode->board);
-        newNode->g = node.g + 1;
-        newNode->f = node.h + node.g;
+        newNode->g = parent->g + 1;
+        newNode->f = parent->h + parent->g;
         moves.push_back(newNode);
     }
     if (i > 0) {
@@ -158,10 +158,10 @@ std::list<Node *> Puzzle::_getAvailableMoves(Node & node) {
         newNode->board = board;
         newNode->board[j][i] = newNode->board[j][i - 1];
         newNode->board[j][i - 1] = 0;
-        newNode->parent = &node;
+        newNode->parent = parent;
         newNode->h = (this->*_heuristic)(newNode->board);
-        newNode->g = node.g + 1;
-        newNode->f = node.h + node.g;
+        newNode->g = parent->g + 1;
+        newNode->f = parent->h + parent->g;
         moves.push_back(newNode);
     }
     if (j < size - 1) {
@@ -169,10 +169,10 @@ std::list<Node *> Puzzle::_getAvailableMoves(Node & node) {
         newNode->board = board;
         newNode->board[j][i] = newNode->board[j + 1][i];
         newNode->board[j + 1][i] = 0;
-        newNode->parent = &node;
+        newNode->parent = parent;
         newNode->h = (this->*_heuristic)(newNode->board);
-        newNode->g = node.g + 1;
-        newNode->f = node.h + node.g;
+        newNode->g = parent->g + 1;
+        newNode->f = parent->h + parent->g;
         moves.push_back(newNode);
     }
     if (i < size - 1) {
@@ -180,10 +180,10 @@ std::list<Node *> Puzzle::_getAvailableMoves(Node & node) {
         newNode->board = board;
         newNode->board[j][i] = newNode->board[j][i + 1];
         newNode->board[j][i + 1] = 0;
-        newNode->parent = &node;
+        newNode->parent = parent;
         newNode->h = (this->*_heuristic)(newNode->board);
-        newNode->g = node.g + 1;
-        newNode->f = node.h + node.g;
+        newNode->g = parent->g + 1;
+        newNode->f = parent->h + parent->g;
         moves.push_back(newNode);
     }
     return moves;
@@ -299,7 +299,7 @@ void Puzzle::solve (void) {
             opened.pop_front();
 
             // getting all availables moves
-            std::list<Node *> moves = this->_getAvailableMoves(*current);
+            std::list<Node *> moves = this->_getAvailableMoves(current);
 
             // looping in them
             for (std::list<Node *>::iterator it = moves.begin(); it != moves.end(); ++it) {
