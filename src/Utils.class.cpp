@@ -58,7 +58,7 @@ void Utils::printInfos (Node * node, t_infos & infos) {
     std::cout << "\033[35m-- STATISTICS ----------\033[0m" << std::endl;
     std::cout << "complexity in time: \033[33m" << infos.timeCpl << "\033[0m" << std::endl;
     std::cout << "complexity in size: \033[33m" << infos.sizeCpl << "\033[0m" << std::endl;
-    std::cout << "number of moves   : \033[33m" << list.size() << "\033[0m" << std::endl;
+    std::cout << "number of moves   : \033[33m" << list.size() - 1 << "\033[0m" << std::endl;
     std::cout << "\033[35m------------------------\033[0m" << std::endl << std::endl;
 }
 
