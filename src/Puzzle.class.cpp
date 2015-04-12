@@ -73,6 +73,9 @@ bool Puzzle::isSolvable(void)
     std::pair<size_t, size_t> pos = Utils::getPos(0, this->_board);
     int dist = this->_getManhattanDistance(pos.first, pos.second, this->_board);
 
+    std::cout << "dist = " << dist << "  permut = " << nbPermut << std::endl;
+    std::cout << "final board =" << std::endl;
+    Utils::printBoard(this->_finalBoard);
     return (dist == 1 || dist % 2 == nbPermut % 2);
 }
 
