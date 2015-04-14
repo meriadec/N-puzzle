@@ -1,5 +1,6 @@
 #include <Utils.class.hpp>
 #include <stdlib.h>
+#include <Graphic.class.hpp>
 #include <iomanip>
 
 std::pair<size_t, size_t> Utils::getPos(int val, BOARD const & board) {
@@ -45,15 +46,11 @@ void Utils::heuristicInsertInList(Node * node, std::list<Node *> & list) {
 void Utils::printInfos (Node * node, t_infos & infos) {
 
     std::list<Node *> list;
+    Graphic graphic(640, 480);
 
     while (node) {
         list.push_front(node);
         node = node->parent;
-    }
-
-    for (std::list<Node *>::iterator it = list.begin(); it != list.end(); ++it) {
-        Utils::printBoard((*it)->board);
-        std::cout << std::endl;
     }
 
     std::cout << "\033[35m-- STATISTICS ----------\033[0m" << std::endl;
@@ -61,6 +58,16 @@ void Utils::printInfos (Node * node, t_infos & infos) {
     std::cout << "complexity in size: \033[33m" << infos.sizeCpl << "\033[0m" << std::endl;
     std::cout << "number of moves   : \033[33m" << list.size() - 1 << "\033[0m" << std::endl;
     std::cout << "\033[35m------------------------\033[0m" << std::endl << std::endl;
+
+    while (1) {
+        graphic.beginDraw();
+        graphic.drawCell(0, 10, 5);
+        graphic.endDraw();
+        if (graphic.getInput() == e_keys::ESC) {
+            return;
+        }
+    }
+
 }
 
 Node * Utils::isBoardInList (Node *node, std::list<Node *> &list) {

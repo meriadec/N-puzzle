@@ -12,6 +12,14 @@ typedef struct      s_infos
     size_t      sizeCpl;
 }                   t_infos;
 
+enum e_keys
+{
+    ESC = 1,
+    LEFT,
+    RIGHT,
+    NONE
+};
+
 class BadMapDimensionsException : public std::exception {
     virtual const char * what (void) const throw () { return "Wrong dimensions."; }
 };
