@@ -34,7 +34,7 @@ void Utils::printBoard(BOARD const & board) {
 void Utils::heuristicInsertInList(Node * node, std::list<Node *> & list) {
     std::list<Node *>::iterator it;
     for (it = list.begin(); it != list.end(); ++it) {
-        if (node->h < (*it)->h) {
+        if (node->f <= (*it)->f) {
             list.insert(it, node);
             return;
         }
