@@ -17,6 +17,7 @@ public:
     static void cleanList (std::list<Node *> &);
     static BOARD generateBoard (size_t size, size_t iterations);
     static BOARD generateFinalBoard (size_t size);
+    static void printVec (std::string, std::vector<int>);
 
     class NotFoundException : public std::exception {
         virtual const char * what (void) const throw () {

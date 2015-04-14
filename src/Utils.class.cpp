@@ -79,10 +79,7 @@ void Utils::cleanList (std::list<Node *> & list) {
 }
 
 BOARD Utils::generateBoard (size_t size, size_t iterations) {
-    std::cout << "_------------------generating board" << std::endl;
     BOARD board = Utils::generateFinalBoard(size);
-    Utils::printBoard(board);
-    std::cout << "oontuhoentu" << std::endl;
     for (size_t iter = 0; iter < iterations; ++iter) {
         std::pair<size_t,size_t> pos = Utils::getPos(0, board);
         std::vector<std::pair<size_t,size_t>> moves;
@@ -94,10 +91,7 @@ BOARD Utils::generateBoard (size_t size, size_t iterations) {
         int val = board[chosen.first][chosen.second];
         board[chosen.first][chosen.second] = 0;
         board[pos.first][pos.second] = val;
-        Utils::printBoard(board);
-        std::cout << std::endl;
     }
-    std::cout << "_------------------end generating board" << std::endl;
     return board;
 }
 
@@ -126,4 +120,12 @@ BOARD Utils::generateFinalBoard (size_t len) {
     std::pair<size_t, size_t> pos = Utils::getPos(static_cast<int>(len * len), board);
     board[pos.first][pos.second] = 0;
     return board;
+}
+
+void Utils::printVec (std::string string, std::vector<int> vector) {
+    std::cout << "[" << string << "]" << std::endl;
+    for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); it++) {
+        std::cout << (*it) << " ";
+    }
+    std::cout << std::endl << std::endl;
 }

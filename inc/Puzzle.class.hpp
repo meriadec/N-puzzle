@@ -44,8 +44,9 @@ private:
 
     std::map<int,std::pair<size_t,size_t>>    _finalPositions;
 
-    int                 _getPermutations (std::list<int> &);
+    int                 _getPermutations (void);
     std::list<int>      _getSerpent (std::vector<std::vector<int>> &);
+    std::vector<int>    _getVec (std::vector<std::vector<int>> &);
     void                _buildFinalBoard (void);
     void                _buildFinalPositions (void);
     int                 _getManhattanDistance (size_t, size_t, BOARD const &) const;

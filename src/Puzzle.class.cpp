@@ -1,5 +1,6 @@
 #include <Puzzle.class.hpp>
 #include <iomanip>
+#include <algorithm>
 #include <Utils.class.hpp>
 
 Puzzle::Puzzle(Puzzle const &src) {
@@ -46,21 +47,25 @@ void Puzzle::setBoard (BOARD board) {
  * @param {int} list
  * @returns {int}
  */
-int Puzzle::_getPermutations (std::list<int> & list)
+int Puzzle::_getPermutations (void)
 {
-    int                       iter = 0;
-    std::list<int>::iterator  it = list.begin();
-    std::list<int>::iterator  tmp;
+    int permut  = 0;
 
-    while (it != list.end()) {
-        tmp = std::next(it, 1);
-        while (tmp != list.end()) {
-            if (*tmp < *it && *tmp != 0) { ++iter; }
-            ++tmp;
+    std::vector<int> stateList = this->_getVec(this->_board);
+    std::vector<int> finalList = this->_getVec(this->_finalBoard);
+
+    for (int nb = 0; nb < stateList.size(); nb++) {
+
+        int stateIndex = static_cast<int>(std::distance(stateList.begin(), std::find(stateList.begin(), stateList.end(), finalList[nb])));
+
+        for (int nb2 = nb + 1; nb2 < stateList.size(); nb2++) {
+            int curIndex = static_cast<int>(std::distance(stateList.begin(), std::find(stateList.begin(), stateList.end(), finalList[nb2])));
+            if (curIndex < stateIndex) {
+                permut++;
+            }
         }
-        ++it;
     }
-    return (iter);
+    return permut;
 }
 
 /**
@@ -68,15 +73,11 @@ int Puzzle::_getPermutations (std::list<int> & list)
  */
 bool Puzzle::isSolvable(void)
 {
-    std::list<int> serpent = this->_getSerpent(this->_board);
-    int nbPermut = this->_getPermutations(serpent);
+    int nbPermut = this->_getPermutations();
     std::pair<size_t, size_t> pos = Utils::getPos(0, this->_board);
     int dist = this->_getManhattanDistance(pos.first, pos.second, this->_board);
 
-    std::cout << "dist = " << dist << "  permut = " << nbPermut << std::endl;
-    std::cout << "final board =" << std::endl;
-    Utils::printBoard(this->_finalBoard);
-    return (dist == 1 || dist % 2 == nbPermut % 2);
+    return (dist % 2 == nbPermut % 2);
 }
 
 /**
@@ -338,4 +339,18 @@ BOARD Puzzle::getBoard (void) {
 
 BOARD Puzzle::getFinalBoard (void) {
     return this->_finalBoard;
+}
+
+/**
+ * Get list in noob order
+ */
+std::vector<int> Puzzle::_getVec (std::vector<std::vector<int>> & board) {
+    std::vector<int> vec;
+    size_t len = board.size();
+    for (size_t j = 0; j < len; j++) {
+        for (size_t i = 0; i < len; i++) {
+            vec.push_back(board[j][i]);
+        }
+    }
+    return vec;
 }
