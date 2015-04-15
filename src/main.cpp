@@ -20,6 +20,7 @@ int main (int ac, char **av)
     Puzzle puzzle;
 
     bool generate = true;
+    bool solvable = true;
     size_t sizeToGenerate = 5;
     size_t iterations = 100;
 
@@ -64,10 +65,15 @@ int main (int ac, char **av)
         if (iterations < 1) { throw IterationsTooSmallException(); }
       }
 
+      // -> unsolvable option
+      if (option == "-u") {
+        solvable = false;
+      }
+
     }
 
     if (generate) {
-      puzzle.setBoard(Utils::generateBoard(sizeToGenerate, iterations));
+      puzzle.setBoard(Utils::generateBoard(sizeToGenerate, iterations, solvable));
     }
 
     puzzle.solve();

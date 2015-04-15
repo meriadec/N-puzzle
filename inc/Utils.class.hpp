@@ -15,7 +15,7 @@ public:
     static void heuristicInsertInList(Node *, std::list<Node *> &);
     static Node * isBoardInList (Node *, std::list<Node *> &);
     static void cleanList (std::list<Node *> &);
-    static BOARD generateBoard (size_t size, size_t iterations);
+    static BOARD generateBoard (size_t size, size_t iterations, bool solvable);
     static BOARD generateFinalBoard (size_t size);
     static void printVec (std::string, std::vector<int>);
 

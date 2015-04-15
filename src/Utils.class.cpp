@@ -101,8 +101,12 @@ void Utils::cleanList (std::list<Node *> & list) {
     }
 }
 
-BOARD Utils::generateBoard (size_t size, size_t iterations) {
+BOARD Utils::generateBoard (size_t size, size_t iterations, bool solvable) {
     BOARD board = Utils::generateFinalBoard(size);
+    if (!solvable) {
+        board[0][0] = 2;
+        board[0][1] = 1;
+    }
     for (size_t iter = 0; iter < iterations; ++iter) {
         std::pair<size_t,size_t> pos = Utils::getPos(0, board);
         std::vector<std::pair<size_t,size_t>> moves;

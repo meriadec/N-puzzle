@@ -232,7 +232,6 @@ int Puzzle::getThirdHeuristicDistance (BOARD const & board) const {
 void Puzzle::solve (void) {
 
     if (!this->isSolvable()) {
-        Utils::printBoard(this->_board);
         std::cout << "\nThis puzzle is not solvable sorry!\n" << std::endl;
         return;
     }
