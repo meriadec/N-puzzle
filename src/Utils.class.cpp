@@ -67,15 +67,12 @@ void Utils::printInfos (Node * node, t_infos & infos) {
         for (int y = 0; y < current->board.size(); ++y) {
             for (int x = 0; x < current->board[y].size(); ++x) {
                 if (current->board[y][x] != 0) {
-                    graphic.drawCell(
-                        y, x,
-                        current->board[y][x],
-                        static_cast<int>(std::distance(list.begin(), it)),
-                        static_cast<int>(list.size())
-                    );
+                    graphic.drawCell(y, x, current->board[y][x]);
                 }
             }
         }
+        graphic.drawPos(static_cast<int>(std::distance(list.begin(), it)), static_cast<int>(list.size()));
+        graphic.drawArrows(it != list.begin(), it != std::prev(list.end(), 1));
         graphic.endDraw();
         e_keys ret = graphic.getInput();
         if (ret == e_keys::ESC) {

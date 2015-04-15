@@ -19,7 +19,9 @@ public:
 
     void beginDraw (void);
     void endDraw (void);
-    void drawCell (int y, int x, int val, int pos, int total);
+    void drawCell (int y, int x, int val);
+    void drawPos (int pos, int total);
+    void drawArrows (bool left, bool right);
 
 private:
     Graphic(void);
