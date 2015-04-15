@@ -37,7 +37,7 @@ int main (int ac, char **av)
       }
 
       // -> heuristic option
-      if (option == "-h") {
+      else if (option == "-h") {
         if (ac <= i + 1) { throw MissingArgException(); }
         std::string heuristic(av[++i]);
         try { puzzle.setHeuristic(heuristic); }
@@ -48,7 +48,7 @@ int main (int ac, char **av)
       }
 
       // -> size option
-      if (option == "-s") {
+      else if (option == "-s") {
         if (ac <= i + 1) { throw MissingArgException(); }
         std::stringstream ss;
         ss << av[++i];
@@ -57,7 +57,7 @@ int main (int ac, char **av)
       }
 
       // -> iterations option
-      if (option == "-i") {
+      else if (option == "-i") {
         if (ac <= i + 1) { throw MissingArgException(); }
         std::stringstream ss;
         ss << av[++i];
@@ -66,8 +66,12 @@ int main (int ac, char **av)
       }
 
       // -> unsolvable option
-      if (option == "-u") {
+      else if (option == "-u") {
         solvable = false;
+      }
+
+      else {
+        throw UnknownOptionException();
       }
 
     }

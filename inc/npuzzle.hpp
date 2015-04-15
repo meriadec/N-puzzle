@@ -33,4 +33,8 @@ class MissingArgException : public std::exception {
     virtual const char * what (void) const throw () { return "Missing argument."; }
 };
 
+class UnknownOptionException : public std::exception {
+    virtual const char * what (void) const throw () { return "Unknown option."; }
+};
+
 #endif
