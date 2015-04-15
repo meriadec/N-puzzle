@@ -58,7 +58,7 @@ e_keys Graphic::getInput (void) {
     return e_keys::NONE;
 }
 
-void Graphic::drawCell (int y, int x, int val) {
+void Graphic::drawCell (int y, int x, int val, int pos, int total) {
 
     sf::Color borderColor(101, 123, 131);
     sf::Color bgColor(88, 110, 117);
@@ -87,4 +87,15 @@ void Graphic::drawCell (int y, int x, int val) {
     shadow.setPosition(textX, textY + 2);
     this->_win->draw(shadow);
     this->_win->draw(text);
+}
+
+Graphic::Graphic (void) {
+}
+
+Graphic::Graphic (Graphic const &src) {
+    *this = src;
+}
+
+Graphic &Graphic::operator= (Graphic const &src) {
+    return *this;
 }

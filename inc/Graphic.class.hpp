@@ -19,7 +19,7 @@ public:
 
     void beginDraw (void);
     void endDraw (void);
-    void drawCell (int y, int x, int val);
+    void drawCell (int y, int x, int val, int pos, int total);
 
 private:
     Graphic(void);
