@@ -46,7 +46,7 @@ void Utils::heuristicInsertInList(Node * node, std::list<Node *> & list) {
 void Utils::printInfos (Node * node, t_infos & infos) {
 
     std::list<Node *> list;
-    Graphic graphic(infos.boardSize * 110 + 10 + 300, infos.boardSize * 110 + 10);
+    Graphic graphic(infos.boardSize * 110 + 10 + 200, infos.boardSize * 110 + 10);
 
     while (node) {
         list.push_front(node);

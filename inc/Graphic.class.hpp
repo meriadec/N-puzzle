@@ -29,6 +29,8 @@ private:
     int _h;
     int _w;
 
+    sf::Font    _font;
+
     sf::RenderWindow * _win;
 
 };
