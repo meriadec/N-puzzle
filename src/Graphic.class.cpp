@@ -87,6 +87,14 @@ void Graphic::drawCell (int y, int x, int val, int pos, int total) {
     shadow.setPosition(textX, textY + 2);
     this->_win->draw(shadow);
     this->_win->draw(text);
+
+    // current tile
+    std::string posStr = std::to_string(pos + 1) + " / " + std::to_string(total);
+    sf::Text    posText(posStr, this->_font);
+    posText.setCharacterSize(40);
+    posText.setColor(sf::Color(0, 43, 54));
+    posText.setPosition(this->_w / 2 - (posText.getLocalBounds().width / 2), this->_h - 75);
+    this->_win->draw(posText);
 }
 
 Graphic::Graphic (void) {
