@@ -243,6 +243,7 @@ void Puzzle::solve (void) {
     t_infos infos;
     infos.sizeCpl = 0;
     infos.timeCpl = 0;
+    infos.boardSize = static_cast<int>(this->_board.size());
     size_t tmp;
 
     // lists used in algorithm

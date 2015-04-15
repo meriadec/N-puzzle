@@ -10,6 +10,7 @@ typedef struct      s_infos
 {
     size_t      timeCpl;
     size_t      sizeCpl;
+    int         boardSize;
 }                   t_infos;
 
 enum e_keys
