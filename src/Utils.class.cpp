@@ -59,17 +59,26 @@ void Utils::printInfos (Node * node, t_infos & infos) {
     std::cout << "number of moves   : \033[33m" << list.size() - 1 << "\033[0m" << std::endl;
     std::cout << "\033[35m------------------------\033[0m" << std::endl << std::endl;
 
+    std::list<Node *>::iterator it = list.begin();
     while (1) {
+
+        Node * current = *it;
         graphic.beginDraw();
-        Node * current = *(list.begin());
         for (int y = 0; y < current->board.size(); ++y) {
             for (int x = 0; x < current->board[y].size(); ++x) {
-                graphic.drawCell(y, x, current->board[y][x]);
+                if (current->board[y][x] != 0) {
+                    graphic.drawCell(y, x, current->board[y][x]);
+                }
             }
         }
         graphic.endDraw();
-        if (graphic.getInput() == e_keys::ESC) {
+        e_keys ret = graphic.getInput();
+        if (ret == e_keys::ESC) {
             return;
+        } else if (ret == e_keys::LEFT && it != list.begin()) {
+            it--;
+        } else if (ret == e_keys::RIGHT && it != std::prev(list.end(), 1)) {
+            it++;
         }
     }
 

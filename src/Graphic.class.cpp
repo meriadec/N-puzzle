@@ -40,6 +40,20 @@ e_keys Graphic::getInput (void) {
             this->_win->close();
             return e_keys::ESC;
         }
+        else if (event.type == sf::Event::KeyPressed) {
+            switch (event.key.code)
+            {
+                case sf::Keyboard::Escape:
+                    this->_win->close();
+                    return e_keys::ESC;
+                case sf::Keyboard::Left:
+                    return e_keys::LEFT;
+                case sf::Keyboard::Right:
+                    return e_keys::RIGHT;
+                default:
+                    break;
+            }
+        }
     }
     return e_keys::NONE;
 }
