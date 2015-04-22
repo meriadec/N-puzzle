@@ -30,6 +30,8 @@ void Puzzle::setHeuristic(std::string & heuristic) {
         this->_heuristic = &Puzzle::getHammingDistance;
     } else if (heuristic == "third") {
         this->_heuristic = &Puzzle::getThirdHeuristicDistance;
+    } else if (heuristic == "nswap") {
+        this->_heuristic = &Puzzle::nSwapHeuristic;
     } else {
         throw UnknownHeuristicException();
     }
@@ -83,7 +85,7 @@ bool Puzzle::isSolvable(void)
 /**
  * @description Build the "serpent", aka the *real* english word for a serpent.
  */
-std::list<int> Puzzle::_getSerpent (BOARD & v)
+std::list<int> Puzzle::_getSerpent (BOARD const & v) const
 {
     std::list<int>  serpent;
     size_t          deep = 0;
@@ -225,6 +227,32 @@ int Puzzle::getThirdHeuristicDistance (BOARD const & board) const {
     }
     return total;
 }
+
+/**
+ * Heuristic 4
+ */
+int Puzzle::nSwapHeuristic (BOARD const & board) const {
+    std::list<int> list = this->_getSerpent(board);
+    std::list<int>::iterator it;
+    int tmp;
+    int swap = 0;
+    size_t index = 1;
+
+    for (it = list.begin(); it != list.end(); ++it, ++index) {
+        if (index == list.size()) {
+            index = 0;
+        }
+        std::list<int>::iterator value = std::find(list.begin(), list.end(), index);
+        if (*value != *it) {
+            tmp = *it;
+            *it = *value;
+            *value = tmp;
+            swap++;
+        }
+    }
+    return swap;
+}
+
 
 /**
  * Solves the puzzle. Obviously.

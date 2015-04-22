@@ -20,6 +20,7 @@ public:
     int             getSumManhattanDistances (BOARD const &) const;
     int             getHammingDistance (BOARD const &) const;
     int             getThirdHeuristicDistance (BOARD const &) const;
+    int             nSwapHeuristic (BOARD const &) const;
     void            solve (void);
     void            setHeuristic(std::string &);
     void            setBoard(BOARD);
@@ -45,7 +46,7 @@ private:
     std::map<int,std::pair<size_t,size_t>>    _finalPositions;
 
     int                 _getPermutations (void);
-    std::list<int>      _getSerpent (std::vector<std::vector<int>> &);
+    std::list<int>      _getSerpent (std::vector<std::vector<int>> const &) const;
     std::vector<int>    _getVec (std::vector<std::vector<int>> &);
     void                _buildFinalBoard (void);
     void                _buildFinalPositions (void);

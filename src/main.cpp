@@ -12,7 +12,7 @@ int main (int ac, char **av)
   srand(time(NULL));
 
   if (ac < 2) {
-    std::cerr << "Usage: ./npuzzle [-f file] [-s size] [-i iterations] [-h <manhattan|hamming|third>]" << std::endl;
+    std::cerr << "Usage: ./npuzzle [-f file] [-s size] [-i iterations] [-h <manhattan|hamming|third|nswap>]" << std::endl;
     return -1;
   }
   try {
