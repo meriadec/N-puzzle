@@ -64,8 +64,8 @@ void Utils::printInfos (Node * node, t_infos & infos) {
 
         Node * current = *it;
         graphic.beginDraw();
-        for (int y = 0; y < current->board.size(); ++y) {
-            for (int x = 0; x < current->board[y].size(); ++x) {
+        for (size_t y = 0; y < current->board.size(); ++y) {
+            for (size_t x = 0; x < current->board[y].size(); ++x) {
                 if (current->board[y][x] != 0) {
                     graphic.drawCell(y, x, current->board[y][x]);
                 }

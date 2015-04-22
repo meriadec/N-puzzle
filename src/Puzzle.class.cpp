@@ -1,9 +1,8 @@
 #include <Puzzle.class.hpp>
 #include <iomanip>
-#include <algorithm>
 #include <Utils.class.hpp>
 
-Puzzle::Puzzle(Puzzle const &src) {
+Puzzle::Puzzle(Puzzle const & __attribute__((unused)) src) {
 }
 
 Puzzle::Puzzle(BOARD const & board) : _board(board) {
@@ -19,7 +18,7 @@ Puzzle::Puzzle(void) {
 Puzzle::~Puzzle(void) {
 }
 
-Puzzle & Puzzle::operator=(Puzzle const &src) {
+Puzzle & Puzzle::operator=(Puzzle const & __attribute__((unused)) src) {
     return *this;
 }
 
@@ -56,11 +55,11 @@ int Puzzle::_getPermutations (void)
     std::vector<int> stateList = this->_getVec(this->_board);
     std::vector<int> finalList = this->_getVec(this->_finalBoard);
 
-    for (int nb = 0; nb < stateList.size(); nb++) {
+    for (size_t nb = 0; nb < stateList.size(); nb++) {
 
         int stateIndex = static_cast<int>(std::distance(stateList.begin(), std::find(stateList.begin(), stateList.end(), finalList[nb])));
 
-        for (int nb2 = nb + 1; nb2 < stateList.size(); nb2++) {
+        for (size_t nb2 = nb + 1; nb2 < stateList.size(); nb2++) {
             int curIndex = static_cast<int>(std::distance(stateList.begin(), std::find(stateList.begin(), stateList.end(), finalList[nb2])));
             if (curIndex < stateIndex) {
                 permut++;

@@ -96,7 +96,7 @@ Graphic::Graphic (Graphic const &src) {
     *this = src;
 }
 
-Graphic &Graphic::operator= (Graphic const &src) {
+Graphic &Graphic::operator= (Graphic const & __attribute__((unused)) src) {
     return *this;
 }
 

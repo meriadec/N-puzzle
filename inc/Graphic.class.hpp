@@ -28,8 +28,8 @@ private:
     Graphic (Graphic const & src);
     Graphic & operator= (Graphic const & src);
 
-    int _h;
     int _w;
+    int _h;
 
     sf::Font    _font;
 
